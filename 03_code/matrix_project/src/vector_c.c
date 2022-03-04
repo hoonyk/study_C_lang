@@ -2,21 +2,22 @@
 
 int vector_print(const Double *matrix, const Matrix *m)
 {
-    for (int i = 0; i < m->row + m->col; i++)
+    for (int i =0; i<m->row;i++)
     {
-        printf("%3d", *(matrix + i));
-        if (i % m->col == 1)
+        for(int j=0;j<m->col;j++)
         {
-            printf("\n");
+            printf("%4.3f  ", *(matrix +(i*m->col)+ j));  // #define 3.3f, 3.3lf setting
         }
+        printf("\n");
     }
+    return 0;
 }
 
 int vector_add(Double *matrix3, Double *matrix2, Double *matrix1, const Matrix *m)
 {
     for (int i =0; i<m->row;i++)
     {
-        for(int j=0;i<m->col;i++)
+        for(int j=0;j<m->col;j++)
         {
             *(matrix3+(i*m->col)+j) = *(matrix1+(i*m->col)+j) + *(matrix2+(i*m->col)+j);
         }
@@ -40,7 +41,7 @@ int vector_multiply(Double *matrix3, Double *matrix2, Double *matrix1, const Mat
             {
                 temp += (*(matrix1+(i*m1->col)+k))*(*(matrix2+(k*m2->col)+j));
             }
-            *(matrix3+(i*m1->col)+j) = temp;
+            *(matrix3+(i*m1->row)+j) = temp;
             temp = 0;
         }
     }
@@ -52,7 +53,7 @@ int vector_emultiply(Double *matrix3, Double *matrix2, Double *matrix1, const Ma
 {
     for (int i =0; i<m->row;i++)
     {
-        for(int j=0;i<m->col;i++)
+        for(int j=0;j<m->col;j++)
         {
             *(matrix3+(i*m->col)+j) = *(matrix1+(i*m->col)+j) * (*(matrix2+(i*m->col)+j));
         }
@@ -64,10 +65,26 @@ int vector_transpose(Double *matrix3, Double *matrix1, const Matrix* m1)
 {
     for (int i =0; i<m1->row;i++)
     {
-        for(int j=0;i<m1->col;i++)
+        for(int j=0;j<m1->col;j++)
         {
             *(matrix3+(j*m1->row)+i) = *(matrix1+(i*m1->col)+j);
         }
     }
     return 0;    
+}
+
+Double vector_innerProduct(Double *matrix1, Double *matrix2, const Matrix *m1,const Matrix *m2)
+{   
+    if(m1->col != m2->col)
+    {
+        printf("size is incorrect!!\n");
+        return -1;
+    }
+
+    Double temp =0;
+    for(int i=0;i<m1->col;i++)
+    {
+        temp += matrix1[i]+matrix2[i];
+    }
+    return temp;
 }
