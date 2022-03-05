@@ -1,3 +1,5 @@
+#ifndef __MATRIX_C_H__
+#define __MATRIX_C_H__
 #include "type_c.h"
 
 int matrix_init(Double **matrix,Double* value,const Matrix* m);
@@ -13,3 +15,4 @@ int matrix_pseudoinv(Double **matrix3, Double **matrix1, const Matrix* m1);
 int matrix_free(Double ***matrix, Int row);
 int matrix_free2(Double **matrix, Int row);
 int matrix_transpose(Double **matrix3, Double **matrix1, const Matrix* m1);
+#endif
