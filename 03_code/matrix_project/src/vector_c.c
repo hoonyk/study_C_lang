@@ -2,6 +2,7 @@
 
 int vector_print(const Double *matrix, const Matrix *m)
 {
+    printf("ans = \n");
     for (int i =0; i<m->row;i++)
     {
         for(int j=0;j<m->col;j++)

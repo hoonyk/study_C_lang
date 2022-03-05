@@ -1,26 +1,37 @@
 #include "matrix_c.h"
 
+int matrix_init(Double **matrix,Double* value,const Matrix* m)
+{
+    for(int i=0;i<m->row;i++)
+    {
+        for(int j=0;j<m->col;j++)
+        {
+            matrix[i][j] = *(value+(i*m->col)+j);
+        }
+    }
+}
+
 int matrix_calloc(Double ***matrix, const Matrix* m)
 {
-    matrix[0] = (int **)malloc(sizeof(int *) * m->row);
+    matrix[0] = (Double **)malloc(sizeof(Double *) * m->row);
     for (int i = 0; i < m->row; i++)
     {
-        matrix[0][i] = (int *)calloc(m->col, sizeof(int));
+        matrix[0][i] = (Double *)calloc(m->col, sizeof(Double));
     }
     return 0;
 }
 
 int matrix_print(Double ***matrix, const Matrix* m)
 {
+    printf("ans =\n");
     for (int i = 0; i < m->row; i++)
     {
         for (int j = 0; j < m->col; j++)
         {
-            printf("%3d", matrix[0][i][j]);
+            printf("%4.3f  ", matrix[0][i][j]);
         }
         printf("\n");
     }
-    printf("matrix : %p : \n", matrix);
     return 0;
 }
 
@@ -30,11 +41,10 @@ int matrix_printf(Double **matrix, const Matrix* m)
     {
         for (int j = 0; j < m->col; j++)
         {
-            printf("%3d", matrix[i][j]);
+            printf("%4.3f  ", matrix[i][j]);
         }
         printf("\n");
     }
-    printf("matrix : %p : \n", matrix);
     return 0;
 }
 
@@ -66,7 +76,7 @@ int matrix_emultiply(Double **matrix3, Double **matrix1, Double **matrix2, const
     if(m1->row!=m2->row || m1->col!=m2->col)
     {
         printf("The matrices are not the same size.");
-        return 0;
+        return -1;
     }
     for (int i = 0; i < m1->row; i++)
     {
@@ -78,12 +88,12 @@ int matrix_emultiply(Double **matrix3, Double **matrix1, Double **matrix2, const
     return 0;
 }
 
-int matrix_add(Double **matrix3, Double **matrix1, int **matrix2, const Matrix* m1, const Matrix* m2)
+int matrix_add(Double **matrix3, Double **matrix1, Double **matrix2, const Matrix* m1, const Matrix* m2)
 {
     if(m1->row!=m2->row || m1->col!=m2->col)
     {
         printf("The matrices are not the same size.");
-        return 0;
+        return -1;
     }
     for (int i = 0; i < m1->row; i++)
     {
@@ -92,6 +102,7 @@ int matrix_add(Double **matrix3, Double **matrix1, int **matrix2, const Matrix* 
             matrix3[i][j] = matrix1[i][j] + matrix2[i][j];
         }
     }
+    return 0;
 }
 
 int matrix_inverse(Double **matrix3, Double **matrix1, const Matrix* m1)
@@ -101,6 +112,20 @@ int matrix_inverse(Double **matrix3, Double **matrix1, const Matrix* m1)
 
 int matrix_einverse(Double **matrix3, Double **matrix1, const Matrix* m1)
 {
+    for (int i = 0; i < m1->row; i++)
+    {
+        for (int j = 0; j < m1->col; j++)
+        {
+            if (matrix1[i][j]==0)
+            {
+                matrix3[i][j] = 0;
+            }
+            else
+            {
+                matrix3[i][j] = 1/matrix1[i][j];
+            }
+        }
+    }
     return 0;
 }
 
